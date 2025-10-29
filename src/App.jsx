@@ -311,7 +311,7 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
           <Field label="Accessorials ($)" hint="Detention, layover, TONU, lumper"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={acc} onChange={e=>setAcc(e.target.value)} placeholder="e.g., 150"/></Field>
         </div>
 
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 space-y-4">
+        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)]">
           <h2 className="font-semibold">Expenses (Per Load)</h2>
           <Field label="Truck Payment ($)" hint="Weekly note / expected loads this week"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={truck} onChange={e=>setTruck(e.target.value)} /></Field>
           <Field label="Trailer Payment ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={trail} onChange={e=>setTrail(e.target.value)} /></Field>
@@ -343,14 +343,16 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
             <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(1) : "—"} />
           </div>
         </div>
-        <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
-          <div className="bg-neutral-950 rounded-2xl p-5">
-            <h3 className="font-semibold">Monthly Projection (Based on Per-Load)</h3>
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              <Stat label="Monthly Gross" value={currency(totals.monthlyGross)} />
-              <Stat label="Monthly Net" value={currency(totals.monthlyNet)} />
-              <Stat label="Monthly Miles" value={isFinite(totals.monthlyMiles) ? totals.monthlyMiles.toLocaleString() : "—"} />
-              <Stat label="Monthly CPM" value={isFinite(totals.monthlyCPM) ? totals.monthlyCPM.toFixed(1) : "—"} />
+        <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)] animate-[pulse_5s_ease-in-out_infinite]">
+          <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
+            <h2 className="font-semibold mb-4">Per-Load Results</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
+              <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
+              <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
+              <Stat label="Net Profit" value={currency(totals.netProfit)} />
+              <Stat label="Actual CPM" value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(1) : "—"} />
+              <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(1) : "—"} />
             </div>
           </div>
         </div>
@@ -463,7 +465,8 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
       </div>
 
       <div className="space-y-6">
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5">
+        <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)] animate-[pulse_5s_ease-in-out_infinite]">
+          <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
           <h2 className="font-semibold mb-4">Monthly Results</h2>
           <div className="grid grid-cols-2 gap-3">
             <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
@@ -471,7 +474,7 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
             <Stat label="Net Profit" value={currency(totals.netProfit)} />
             <Stat label="CPM (Cost Per Mile)" value={isFinite(totals.cpm) ? `$${totals.cpm.toFixed(2)}` : "—"} />
             <Stat label="Profit Margin" value={isFinite(totals.margin) ? `${totals.margin.toFixed(1)}%` : "—"} />
-
+           </div>
           </div>
         </div>
         <RequestAccessForm />
