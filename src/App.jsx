@@ -32,9 +32,9 @@ const LS_CODE_KEY = "pds_cpm_session_code_v1";
 
 // ====== EMAILJS PLACEHOLDERS =================================================
 // Replace with your EmailJS values (https://www.emailjs.com/)
-const EMAILJS_SERVICE_ID = "YOUR_EMAILJS_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "YOUR_EMAILJS_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY = "YOUR_EMAILJS_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "service_fvvwtmg";
+const EMAILJS_TEMPLATE_ID = "template_07jvanu";
+const EMAILJS_PUBLIC_KEY = "-KdKz9sz43XeUXkfG";
 
 // ====== STATE FUEL PRICES (EDITABLE) =========================================
 // Default values are placeholders. Update them weekly from DOE/EIA weekly diesel report.
