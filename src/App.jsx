@@ -331,8 +331,8 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
               <input
                 type="number"
                 className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
-                value={insurance}
-                onChange={(e) => setInsurance(e.target.value)}
+                value={ins}
+                onChange={(e) => setIns(e.target.value)}
               />
             </Field>
               <div className="text-sm text-neutral-300 mb-2 mt-4">Fuel (auto)</div>
@@ -476,7 +476,8 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
     setGross(""); 
     setMiles(""); 
     setTruck(""); 
-    setTrail(""); setIns(""); 
+    setTrail(""); 
+    setIns(""); 
     setMpg("7"); 
     setStateCode(""); 
     setPrice(""); 
