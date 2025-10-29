@@ -448,11 +448,10 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
     misc: parseFloat(misc) || 0,
   };
 
-  // ✅ Correct fuel cost calculation
-  const fuelCost =
-    parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : 0;
+  // ✅ Correct fuel cost
+  const fuelCost = parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : 0;
 
-  // ✅ Total expenses calculation
+  // ✅ Total expenses
   const totalExpenses =
     parsed.truck +
     parsed.trailer +
@@ -465,10 +464,11 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
   // ✅ Net profit
   const netProfit = parsed.gross - totalExpenses;
 
-  // ✅ Correct CPM math (dollars per mile)
+  // ✅ CPM math
   const actualCPM = parsed.miles > 0 ? parsed.gross / parsed.miles : 0;
   const breakEvenCPM = parsed.miles > 0 ? totalExpenses / parsed.miles : 0;
 
+  // ✅ Return values
   return {
     fuelCost,
     totalExpenses,
