@@ -402,24 +402,25 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
 
   const totals = useMemo(() => {
   const fuelCost = parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : NaN;
-  const expenses = parsed.truck + parsed.trail + parsed.ins + (isFinite(fuelCost) ? fuelCost : 0) + parsed.maint + parsed.misc + parsed.driver;
-  const net = parsed.gross - expenses;
+  const totalExpenses =
+    parsed.truck +
+    parsed.trail +
+    parsed.ins +
+    (isFinite(fuelCost) ? fuelCost : 0) +
+    parsed.maint +
+    parsed.misc +
+    parsed.driver;
 
-  // Calculations
-  const revenuePerMile = parsed.miles > 0 ? parsed.gross / parsed.miles : NaN;
-  const costPerMile = parsed.miles > 0 ? expenses / parsed.miles : NaN;
-  const profitPerMile = parsed.miles > 0 ? net / parsed.miles : NaN;
+  const netProfit = parsed.gross - totalExpenses;
 
-  // Converted to CPM (cents per mile)
-  const revenueCPM = isFinite(revenuePerMile) ? revenuePerMile * 100 : NaN;
-  const costCPM = isFinite(costPerMile) ? costPerMile * 100 : NaN;
-  const profitCPM = isFinite(profitPerMile) ? profitPerMile * 100 : NaN;
+  const costPerMile =
+    parsed.miles > 0 ? totalExpenses / parsed.miles : NaN;
+  const cpm = isFinite(costPerMile) ? costPerMile : NaN; // cost per mile in dollars
+  const margin =
+    parsed.gross > 0 ? (netProfit / parsed.gross) * 100 : NaN;
 
-  const margin = parsed.gross > 0 ? (net / parsed.gross) * 100 : NaN;
-
-  return { fuelCost, expenses, net, revenueCPM, costCPM, profitCPM, margin };
+  return { fuelCost, totalExpenses, netProfit, cpm, margin };
 }, [parsed]);
-
 
   const reset = () => {
     setGross(""); setMiles(""); setTruck(""); setTrail(""); setIns(""); setMpg("7"); setStateCode(""); setPrice(""); setDriver(""); setMaint(""); setMisc("");
@@ -455,12 +456,11 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
           <h2 className="font-semibold mb-4">Monthly Results</h2>
           <div className="grid grid-cols-2 gap-3">
             <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
-            <Stat label="Total Expenses" value={currency(totals.expenses)} />
-            <Stat label="Net Profit" value={currency(totals.net)} />
-            <Stat label="Revenue CPM" value={isFinite(totals.revenueCPM) ? totals.revenueCPM.toFixed(1) : "—"} />
-            <Stat label="Cost CPM" value={isFinite(totals.costCPM) ? totals.costCPM.toFixed(1) : "—"} />
-            <Stat label="Profit CPM" value={isFinite(totals.profitCPM) ? totals.profitCPM.toFixed(1) : "—"} />
+            <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
+            <Stat label="Net Profit" value={currency(totals.netProfit)} />
+            <Stat label="CPM (Cost Per Mile)" value={isFinite(totals.cpm) ? `$${totals.cpm.toFixed(2)}` : "—"} />
             <Stat label="Profit Margin" value={isFinite(totals.margin) ? `${totals.margin.toFixed(1)}%` : "—"} />
+
           </div>
         </div>
         <RequestAccessForm />
