@@ -329,24 +329,22 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
             <div className="flex items-end"><button onClick={reset} className="w-full rounded-lg border border-neutral-700 px-4 py-2 hover:bg-neutral-900">Reset</button></div>
           </div>
         </div>
-      </div                  {/* 🔥 Per-Load Results Card with Phoenix Visuals */}
-        {/* 🔥 Per-Load Results Card with Phoenix Visuals */}
-           {/* 🚛 Per-Load Results Card (Static Phoenix Border) */}
-            <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)]">
-              <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
-                <h2 className="font-semibold mb-4">Per-Load Results</h2>
-                <div className="grid grid-cols-2 gap-3">
-                  <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
-                  <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
-                  <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
-                  <Stat label="Net Profit" value={currency(totals.netProfit)} />
-                  <Stat label="Actual CPM" value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"} />
-                  <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"} />
-                </div>
-              </div>
+      </div  
+    {/* 🚛 Per-Load Results Card (Static Phoenix Border) */}
+      <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)]">
+        <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
+            <h2 className="font-semibold mb-4">Per-Load Results</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
+              <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
+              <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
+              <Stat label="Net Profit" value={currency(totals.netProfit)} />
+              <Stat label="Actual CPM" value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"} />
+              <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"} />
             </div>
-          <RequestAccessForm />
+          </div>
         </div>
+        <RequestAccessForm />
       </div>
   );
 }
