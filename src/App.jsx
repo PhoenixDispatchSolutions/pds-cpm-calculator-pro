@@ -203,7 +203,7 @@ function RequestAccessForm() {
 }
 
 // ====== CALCULATORS ==========================================================
-function FuelPicker({ stateCode, setStateCode, price, setPrice, mpg, setMpg, miles, setMiles }) {
+function FuelPicker({ stateCode, setStateCode, price, setPrice, mpg, setMpg, miles, setMiles, milesLabel = "Miles (this load)" }) {
   // show state select + manual override
   return (
     <div className="grid sm:grid-cols-3 gap-3">
