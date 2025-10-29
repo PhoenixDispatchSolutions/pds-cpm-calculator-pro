@@ -64,8 +64,8 @@ export function RequestAccessForm() {
           >
             {status === "sending" ? "Sending…" : "Submit Request"}
           </button>
-          {status === "sent" and <span className="text-green-400 text-sm">Sent!</span>}
-          {status === "error" and <span className="text-red-400 text-sm">Error sending.</span>}
+          {status === "sent" && <span className="text-green-400 text-sm">Sent!</span>}
+          {status === "error" && <span className="text-red-400 text-sm">Error sending.</span>}
         </div>
       </form>
     </div>
