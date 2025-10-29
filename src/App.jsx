@@ -280,26 +280,60 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
   };
 
   const totals = useMemo(() => {
-    const fuelCost = parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : NaN;
-    const totalExpenses = parsed.truck + parsed.trail + parsed.ins + (isFinite(fuelCost) ? fuelCost : 0) + parsed.maint + parsed.misc + parsed.driver;
-    const grossTotal = parsed.gross + parsed.acc;
-    const netProfit = grossTotal - totalExpenses;
-    const actualRPM = parsed.miles > 0 ? grossTotal / parsed.miles : NaN;
-    const actualCPM = isFinite(actualRPM) ? actualRPM * 100 : NaN;
-    const breakEvenRPM = parsed.miles > 0 ? totalExpenses / parsed.miles : NaN;
-    const breakEvenCPM = isFinite(breakEvenRPM) ? breakEvenRPM * 100 : NaN;
+    const parsed = {
+      gross: parseFloat(gross) || 0,
+      miles: parseFloat(miles) || 0,
+      truck: parseFloat(truck) || 0,
+      trailer: parseFloat(trail) || 0,
+      ins: parseFloat(ins) || 0,
+      price: parseFloat(price) || 0,
+      mpg: parseFloat(mpg) || 0,
+      driver: parseFloat(driver) || 0,
+      maint: parseFloat(maint) || 0,
+      misc: parseFloat(misc) || 0,
+      loads: parseFloat(loadsPerMonth) || 1,
+  };
 
-    // Monthly projection
-    const monthlyGross = isFinite(parsed.lpm) ? grossTotal * parsed.lpm : NaN;
-    const monthlyNet = isFinite(parsed.lpm) ? netProfit * parsed.lpm : NaN;
-    const monthlyMiles = isFinite(parsed.lpm) ? parsed.miles * parsed.lpm : NaN;
-    const monthlyCPM = isFinite(monthlyMiles) && monthlyMiles > 0 ? (monthlyGross / monthlyMiles) * 100 : NaN;
+  const fuelCost = parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : 0;
+  const totalExpenses =
+    parsed.truck + parsed.trailer + parsed.ins + fuelCost + parsed.driver + parsed.maint + parsed.misc;
+  const netProfit = parsed.gross - totalExpenses;
+  const actualCPM = parsed.miles > 0 ? totalExpenses / parsed.miles : 0;
+  const breakEvenCPM = parsed.miles > 0 ? parsed.gross / parsed.miles : 0;
 
-    return { fuelCost, totalExpenses, grossTotal, netProfit, actualCPM, breakEvenCPM, monthlyGross, monthlyNet, monthlyMiles, monthlyCPM };
-  }, [parsed]);
+  const monthlyGross = parsed.gross * parsed.loads;
+  const monthlyMiles = parsed.miles * parsed.loads;
+  const monthlyExpenses = totalExpenses * parsed.loads;
+  const monthlyNet = monthlyGross - monthlyExpenses;
+  const monthlyCPM = monthlyMiles > 0 ? monthlyExpenses / monthlyMiles : 0;
+
+  return {
+    fuelCost,
+    totalExpenses,
+    netProfit,
+    actualCPM,
+    breakEvenCPM,
+    monthlyGross,
+    monthlyMiles,
+    monthlyNet,
+    monthlyCPM,
+  };
+}, [gross, miles, truck, trail, ins, price, mpg, driver, maint, misc, loadsPerMonth]);
 
   const reset = () => {
-    setGross(""); setAcc(""); setTruck(""); setTrail(""); setIns(""); setMpg("7"); setMiles(""); setStateCode(""); setPrice(""); setDriver(""); setMaint(""); setMisc(""); setLoadsPerMonth("12");
+    setGross(""); 
+    setAcc(""); 
+    setTruck(""); 
+    setTrail(""); 
+    setIns(""); 
+    setMpg("7"); 
+    setMiles(""); 
+    setStateCode(""); 
+    setPrice(""); 
+    setDriver(""); 
+    setMaint(""); 
+    setMisc(""); 
+    setLoadsPerMonth("12");
   };
 
   return (
