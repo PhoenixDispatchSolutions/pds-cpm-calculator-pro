@@ -207,7 +207,7 @@ function FuelPicker({ stateCode, setStateCode, price, setPrice, mpg, setMpg, mil
   // show state select + manual override
   return (
     <div className="grid sm:grid-cols-3 gap-3">
-      <Field label="Miles (this load)" hint="Hub miles inc. deadhead if desired">
+      <Field label={milesLabel} hint="Total loaded miles for this period">
         <input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={miles} onChange={e=>setMiles(e.target.value)} />
       </Field>
       <Field label="MPG (loaded avg)">
@@ -442,7 +442,18 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
           <Field label="Insurance ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={ins} onChange={e=>setIns(e.target.value)} /></Field>
           <div>
             <div className="text-sm text-neutral-300 mb-2">Fuel (auto)</div>
-            <FuelPicker stateCode={stateCode} setStateCode={setStateCode} price={price} setPrice={setPrice} mpg={mpg} setMpg={setMpg} miles={miles} setMiles={setMiles} />
+            <FuelPicker
+              stateCode={stateCode}
+              setStateCode={setStateCode}
+              price={price}
+              setPrice={setPrice}
+              mpg={mpg}
+              setMpg={setMpg}
+              miles={miles}
+              setMiles={setMiles}
+              milesLabel="Miles (Monthly Total)"
+/>
+
           </div>
           <Field label="Driver Pay ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={driver} onChange={e=>setDriver(e.target.value)} /></Field>
           <Field label="Maintenance ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={maint} onChange={e=>setMaint(e.target.value)} /></Field>
