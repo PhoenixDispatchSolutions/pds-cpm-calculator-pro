@@ -305,47 +305,110 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
   return (
     <div className="grid md:grid-cols-3 gap-6">
       <div className="md:col-span-2 space-y-6">
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 space-y-4">
-          <h2 className="font-semibold">Income</h2>
-          <Field label="Gross / Linehaul ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={gross} onChange={e=>setGross(e.target.value)} placeholder="e.g., 1850"/></Field>
-          <Field label="Accessorials ($)" hint="Detention, layover, TONU, lumper"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={acc} onChange={e=>setAcc(e.target.value)} placeholder="e.g., 150"/></Field>
-        </div>
-
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-5 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)]">
-          <h2 className="font-semibold">Expenses (Per Load)</h2>
-          <Field label="Truck Payment ($)" hint="Weekly note / expected loads this week"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={truck} onChange={e=>setTruck(e.target.value)} /></Field>
-          <Field label="Trailer Payment ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={trail} onChange={e=>setTrail(e.target.value)} /></Field>
-          <Field label="Insurance ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={ins} onChange={e=>setIns(e.target.value)} /></Field>
-          <div>
-            <div className="text-sm text-neutral-300 mb-2">Fuel (auto)</div>
-            <FuelPicker stateCode={stateCode} setStateCode={setStateCode} price={price} setPrice={setPrice} mpg={mpg} setMpg={setMpg} miles={miles} setMiles={setMiles} />
-            <div className="text-xs text-neutral-500 mt-2">Fuel Cost auto = (Miles ÷ MPG) × Price</div>
+        <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
+          <div className="bg-neutral-950 rounded-2xl p-6 shadow-lg">
+            <h2 className="font-semibold mb-4">Expenses (Per Load)</h2>
+  
+          
+            <Field label="Truck Payment ($)">
+              <input
+                type="number"
+                className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
+                value={truck}
+                onChange={(e) => setTruck(e.target.value)}
+              />
+            </Field>
+  
+            <Field label="Trailer Payment ($)">
+              <input
+                type="number"
+                className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
+                value={trailer}
+                onChange={(e) => setTrailer(e.target.value)}
+              />
+            </Field>
+  
+            <Field label="Insurance ($)">
+              <input
+                type="number"
+                className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
+                value={insurance}
+                onChange={(e) => setInsurance(e.target.value)}
+              />
+            </Field>
+              <div className="text-sm text-neutral-300 mb-2 mt-4">Fuel (auto)</div>
+            <FuelPicker
+              stateCode={stateCode}
+              setStateCode={setStateCode}
+              price={price}
+              setPrice={setPrice}
+              mpg={mpg}
+              setMpg={setMpg}
+              miles={miles}
+              setMiles={setMiles}
+              milesLabel="Miles (this load)"
+            />
+            <Field label="Driver Pay Goal ($)">
+              <input
+                type="number"
+                className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
+                value={driver}
+                onChange={(e) => setDriver(e.target.value)}
+              />
+            </Field>
+  
+            <Field label="Maintenance ($)" hint="Oil, tires, DEF, set-aside per load">
+              <input
+                type="number"
+                className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
+                value={maint}
+                onChange={(e) => setMaint(e.target.value)}
+              />
+            </Field>
+  
+            <Field label="Miscellaneous ($)" hint="Food, parking, tolls, 2290, permits">
+              <input
+                type="number"
+                className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
+                value={misc}
+                onChange={(e) => setMisc(e.target.value)}
+              />
+            </Field>
+  
+            <div className="flex gap-3 mt-4">
+              <button
+                onClick={reset}
+                className="px-4 py-2 rounded-lg border border-neutral-700 hover:bg-neutral-800 transition">
+                Reset
+              </button>
+            </div>
           </div>
-          <Field label="Driver Pay Goal ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={driver} onChange={e=>setDriver(e.target.value)} /></Field>
-          <Field label="Maintenance ($)" hint="Oil, tires, DEF, set-aside per load"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={maint} onChange={e=>setMaint(e.target.value)} /></Field>
-          <Field label="Miscellaneous ($)" hint="Food, parking, tolls, 2290, permits"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={misc} onChange={e=>setMisc(e.target.value)} /></Field>
-          <div className="grid sm:grid-cols-2 gap-3">
-            <Field label="Loads per Month (projection)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={loadsPerMonth} onChange={e=>setLoadsPerMonth(e.target.value)} /></Field>
-            <div className="flex items-end"><button onClick={reset} className="w-full rounded-lg border border-neutral-700 px-4 py-2 hover:bg-neutral-900">Reset</button></div>
-          </div>
         </div>
-      </div>  
-    {/* 🚛 Per-Load Results Card (Static Phoenix Border) */}
-      <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)]">
-        <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
+      </div>
+      <div className="space-y-6">
+        <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
+          <div className="bg-neutral-950 rounded-2xl p-6 shadow-lg">
             <h2 className="font-semibold mb-4">Per-Load Results</h2>
             <div className="grid grid-cols-2 gap-3">
               <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
               <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
               <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
               <Stat label="Net Profit" value={currency(totals.netProfit)} />
-              <Stat label="Actual CPM" value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"} />
-              <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"} />
+              <Stat
+                label="Actual CPM"
+                value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}
+              />
+              <Stat
+                label="Break-even CPM"
+                value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}
+              />
             </div>
           </div>
         </div>
         <RequestAccessForm />
-  );
+      </div>
+    </div>
+);
 }
 
 function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
@@ -494,25 +557,47 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-6">
         {mode === "choose" && (
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="rounded-2xl bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px]">
-              <div className="rounded-2xl bg-neutral-950 p-6 flex flex-col justify-between">
+            {/* 🚛 Per-Load CPM Calculator */}
+            <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
+              <div className="rounded-2xl bg-neutral-950 p-6 flex flex-col justify-between h-full">
                 <div>
-                  <h2 className="text-xl font-semibold mb-2">Per-Load CPM Calculator</h2>
-                  <p className="text-neutral-400 text-sm">Build a load-level pro forma: fuel, driver pay, fixed costs per load, and real CPM.</p>
+                  <h2 className="text-xl font-semibold mb-2 text-white">
+                    Per-Load CPM Calculator
+                  </h2>
+                  <p className="text-neutral-400 text-sm leading-snug">
+                    Build a load-level pro forma: fuel, driver pay, fixed costs per load, and real CPM.
+                  </p>
                 </div>
-                <button onClick={()=>setMode("perload")} className="mt-4 rounded-lg border border-neutral-800 px-4 py-2 hover:bg-neutral-900">Start</button>
+                <button
+                  onClick={() => setMode("perload")}
+                  className="mt-5 rounded-lg border border-neutral-800 px-5 py-2 bg-neutral-950 hover:bg-neutral-900 transition"
+                >
+                  Start
+                </button>
               </div>
             </div>
-            <div className="rounded-2xl bg-neutral-900 border border-neutral-800 p-6 flex flex-col justify-between">
-              <div>
-                <h2 className="text-xl font-semibold mb-2">Monthly Expense CPM</h2>
-                <p className="text-neutral-400 text-sm">Enter monthly totals to see net profit, CPM, break-even CPM, and margin.</p>
+        
+            {/* 📅 Monthly Expense CPM */}
+            <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
+              <div className="rounded-2xl bg-neutral-950 p-6 flex flex-col justify-between h-full">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2 text-white">
+                    Monthly Expense CPM
+                  </h2>
+                  <p className="text-neutral-400 text-sm leading-snug">
+                    Enter monthly totals to see net profit, CPM, break-even CPM, and margin.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setMode("monthly")}
+                  className="mt-5 rounded-lg border border-neutral-800 px-5 py-2 bg-neutral-950 hover:bg-neutral-900 transition"
+                >
+                  Start
+                </button>
               </div>
-              <button onClick={()=>setMode("monthly")} className="mt-4 rounded-lg border border-neutral-800 px-4 py-2 hover:bg-neutral-900">Start</button>
             </div>
           </div>
         )}
-
         {mode !== "choose" && (
           <div className="flex items-center gap-3">
             <button onClick={()=>setMode("choose")} className="text-xs px-3 py-2 rounded-lg border border-neutral-800 hover:bg-neutral-900">← Mode Select</button>
