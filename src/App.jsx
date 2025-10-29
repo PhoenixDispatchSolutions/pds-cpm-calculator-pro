@@ -394,20 +394,15 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
               <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
               <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
               <Stat label="Net Profit" value={currency(totals.netProfit)} />
-              <Stat
-                label="Actual CPM"
-                value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}
-              />
-              <Stat
-                label="Break-even CPM"
-                value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}
-              />
+              <Stat label="Actual CPM" value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}/>
+              <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}/>
             </div>
           </div>
         </div>
         <RequestAccessForm />
       </div>
     </div>
+   </div>
 );
 }
 
