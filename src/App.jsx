@@ -384,23 +384,29 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
           </div>
         </div>
       </div>
-      <div className="space-y-6">
-        <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
-          <div className="bg-neutral-950 rounded-2xl p-6 shadow-lg">
-            <h2 className="font-semibold mb-4">Per-Load Results</h2>
-            <div className="grid grid-cols-2 gap-3">
-              <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
-              <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
-              <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
-              <Stat label="Net Profit" value={currency(totals.netProfit)} />
-              <Stat label="Actual CPM" value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}/>
-              <Stat label="Break-even CPM" value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}/>
+        <div className="space-y-6">
+          <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
+            <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
+              <h2 className="font-semibold mb-4">Per-Load Results</h2>
+              <div className="grid grid-cols-2 gap-3">
+                <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
+                <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
+                <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
+                <Stat label="Net Profit" value={currency(totals.netProfit)} />
+                <Stat
+                  label="Actual CPM"
+                  value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}
+                />
+                <Stat
+                  label="Break-even CPM"
+                  value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <RequestAccessForm/>
-      </div>
-    </div>
+    <RequestAccessForm />
+  </div>
+</div>
 );
 }
 
@@ -467,7 +473,17 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
 }, [parsed]);
 
   const reset = () => {
-    setGross(""); setMiles(""); setTruck(""); setTrail(""); setIns(""); setMpg("7"); setStateCode(""); setPrice(""); setDriver(""); setMaint(""); setMisc("");
+    setGross(""); 
+    setMiles(""); 
+    setTruck(""); 
+    setTrail(""); setIns(""); 
+    setMpg("7"); 
+    setStateCode(""); 
+    setPrice(""); 
+    setDriver(""); 
+    setMaint(""); 
+    setMisc("");
+    setLoadsPerMonth("");
   };
 
   return (
@@ -496,7 +512,7 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
               miles={miles}
               setMiles={setMiles}
               milesLabel="Miles (Monthly Total)"
-/>
+              />
 
           </div>
           <Field label="Driver Pay ($)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={driver} onChange={e=>setDriver(e.target.value)} /></Field>
@@ -507,7 +523,6 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
       </div>
 
       <div className="space-y-6">
-        {/* 📅 Monthly Results Card (Static Phoenix Border) */}
           <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,100,0,0.25)]">
             <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
               <h2 className="font-semibold mb-4">Monthly Results</h2>
