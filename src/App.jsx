@@ -322,8 +322,8 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
               <input
                 type="number"
                 className="mt-1 w-full rounded-xl bg-neutral-900 border border-neutral-700 px-4 py-3"
-                value={trailer}
-                onChange={(e) => setTrailer(e.target.value)}
+                value={trail}
+                onChange={(e) => setTrail(e.target.value)}
               />
             </Field>
   
@@ -384,30 +384,30 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
           </div>
         </div>
       </div>
-        <div className="space-y-6">
-          <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
-            <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
-              <h2 className="font-semibold mb-4">Per-Load Results</h2>
-              <div className="grid grid-cols-2 gap-3">
-                <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
-                <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
-                <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
-                <Stat label="Net Profit" value={currency(totals.netProfit)} />
-                <Stat
-                  label="Actual CPM"
-                  value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}
-                />
-                <Stat
-                  label="Break-even CPM"
-                  value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}
-                />
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-red-600 via-orange-500 to-amber-400 p-[1px] rounded-2xl">
+                <div className="bg-neutral-950 rounded-2xl p-5 shadow-lg">
+                  <h2 className="font-semibold mb-4">Per-Load Results</h2>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Stat label="Fuel Cost" value={currency(totals.fuelCost)} />
+                    <Stat label="Total Expenses" value={currency(totals.totalExpenses)} />
+                    <Stat label="Gross (incl. access.)" value={currency(totals.grossTotal)} />
+                    <Stat label="Net Profit" value={currency(totals.netProfit)} />
+                    <Stat
+                      label="Actual CPM"
+                      value={isFinite(totals.actualCPM) ? totals.actualCPM.toFixed(2) : "—"}
+                    />
+                    <Stat
+                      label="Break-even CPM"
+                      value={isFinite(totals.breakEvenCPM) ? totals.breakEvenCPM.toFixed(2) : "—"}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-    <RequestAccessForm />
-  </div>
-</div>
-);
+        <RequestAccessForm />
+      </div>
+    </div>
+  );
 }
 
 function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
