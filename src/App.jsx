@@ -359,7 +359,6 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
           <Field label="Maintenance ($)" hint="Oil, tires, DEF, set-aside per load"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={maint} onChange={e=>setMaint(e.target.value)} /></Field>
           <Field label="Miscellaneous ($)" hint="Food, parking, tolls, 2290, permits"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={misc} onChange={e=>setMisc(e.target.value)} /></Field>
           <div className="grid sm:grid-cols-2 gap-3">
-            <Field label="Loads per Month (projection)"><input type="number" className="mt-1 w-full rounded-xl bg-neutral-950 border border-neutral-700 px-4 py-3" value={loadsPerMonth} onChange={e=>setLoadsPerMonth(e.target.value)} /></Field>
             <div className="flex items-end"><button onClick={reset} className="w-full rounded-lg border border-neutral-700 px-4 py-2 hover:bg-neutral-900">Reset</button></div>
           </div>
         </div>
