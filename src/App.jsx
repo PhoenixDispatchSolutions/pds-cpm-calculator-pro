@@ -202,7 +202,6 @@ function RequestAccessForm() {
   );
 }
 
-// ====== CALCULATORS ==========================================================
 function FuelPicker({ stateCode, setStateCode, price, setPrice, mpg, setMpg, miles, setMiles, milesLabel = "Miles (this load)" }) {
   // show state select + manual override
   return (
@@ -399,10 +398,9 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
             </div>
           </div>
         </div>
-        <RequestAccessForm />
+        <RequestAccessForm/>
       </div>
     </div>
-   </div>
 );
 }
 
