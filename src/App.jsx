@@ -438,8 +438,8 @@ export default function App() {
           </div>
         )}
 
-        {mode === "perload" and <PerLoadCalculator />}
-        {mode === "monthly" and <MonthlyCalculator />}
+        {mode === "perload" && <PerLoadCalculator />}
+        {mode === "monthly" && <MonthlyCalculator />}
       </main>
 
       <footer className="py-8 text-center text-xs text-neutral-500">
