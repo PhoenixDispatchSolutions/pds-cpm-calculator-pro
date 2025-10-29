@@ -346,6 +346,7 @@ function PerLoadCalculator({ cacheKey = "perload_v1" }) {
         </div>
         <RequestAccessForm />
       </div>
+    </div>
   );
 }
 
