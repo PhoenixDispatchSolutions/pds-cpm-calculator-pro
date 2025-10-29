@@ -435,25 +435,48 @@ function MonthlyCalculator({ cacheKey = "monthly_v1" }) {
   };
 
   const totals = useMemo(() => {
-  const fuelCost = parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : NaN;
-  const expenses = parsed.truck + parsed.trail + parsed.ins + (isFinite(fuelCost) ? fuelCost : 0) + parsed.maint + parsed.misc + parsed.driver;
-  const net = parsed.gross - expenses;
+  const parsed = {
+    gross: parseFloat(gross) || 0,
+    miles: parseFloat(miles) || 0,
+    truck: parseFloat(truck) || 0,
+    trailer: parseFloat(trail) || 0,
+    ins: parseFloat(ins) || 0,
+    price: parseFloat(price) || 0,
+    mpg: parseFloat(mpg) || 0,
+    driver: parseFloat(driver) || 0,
+    maint: parseFloat(maint) || 0,
+    misc: parseFloat(misc) || 0,
+  };
 
-  // Calculations
-  const revenuePerMile = parsed.miles > 0 ? parsed.gross / parsed.miles : NaN;
-  const costPerMile = parsed.miles > 0 ? expenses / parsed.miles : NaN;
-  const profitPerMile = parsed.miles > 0 ? net / parsed.miles : NaN;
+  // ✅ Correct fuel cost calculation
+  const fuelCost =
+    parsed.mpg > 0 ? (parsed.miles / parsed.mpg) * parsed.price : 0;
 
-  // Converted to CPM (cents per mile)
-  const revenueCPM = isFinite(revenuePerMile) ? revenuePerMile * 100 : NaN;
-  const costCPM = isFinite(costPerMile) ? costPerMile * 100 : NaN;
-  const profitCPM = isFinite(profitPerMile) ? profitPerMile * 100 : NaN;
+  // ✅ Total expenses calculation
+  const totalExpenses =
+    parsed.truck +
+    parsed.trailer +
+    parsed.ins +
+    fuelCost +
+    parsed.driver +
+    parsed.maint +
+    parsed.misc;
 
-  const margin = parsed.gross > 0 ? (net / parsed.gross) * 100 : NaN;
+  // ✅ Net profit
+  const netProfit = parsed.gross - totalExpenses;
 
-  return { fuelCost, expenses, net, revenueCPM, costCPM, profitCPM, margin };
-}, [parsed]);
+  // ✅ Correct CPM math (dollars per mile)
+  const actualCPM = parsed.miles > 0 ? parsed.gross / parsed.miles : 0;
+  const breakEvenCPM = parsed.miles > 0 ? totalExpenses / parsed.miles : 0;
 
+  return {
+    fuelCost,
+    totalExpenses,
+    netProfit,
+    actualCPM,
+    breakEvenCPM,
+  };
+}, [gross, miles, truck, trail, ins, price, mpg, driver, maint, misc]);
 
   const reset = () => {
     setGross(""); setMiles(""); setTruck(""); setTrail(""); setIns(""); setMpg("7"); setStateCode(""); setPrice(""); setDriver(""); setMaint(""); setMisc("");
